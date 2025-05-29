@@ -2,9 +2,6 @@
 [![Open in colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SwayamInSync/clothes-virtual-try-on/blob/main/setup_gradio.ipynb)
 
 
-## Star History
-[![Star History Chart](https://api.star-history.com/svg?repos=SwayamInSync/clothes-virtual-try-on&type=Date)](https://star-history.com/#SwayamInSync/clothes-virtual-try-on&Date)
-
 ## Table of contents
 - [ClosetTech Virtual Try On](#closettch-virtual-try-on)
   - [Table of contents](#table-of-contents)
