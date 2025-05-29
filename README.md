@@ -6,7 +6,7 @@
 [![Star History Chart](https://api.star-history.com/svg?repos=SwayamInSync/clothes-virtual-try-on&type=Date)](https://star-history.com/#SwayamInSync/clothes-virtual-try-on&Date)
 
 ## Table of contents
-- [Cloths Virtual Try On](#cloths-virtual-try-on)
+- [ClosetTech Virtual Try On](#closettch-virtual-try-on)
   - [Table of contents](#table-of-contents)
   - [General info](#general-info)
   - [Demo](#demo)
