@@ -1,10 +1,16 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, render_template
 from PIL import Image
-import requests
 from io import BytesIO
 import base64
+import os
+
+# Import your local pipeline functions
+from run import try_on_model
 
 app = Flask(__name__)
+
+UPLOAD_FOLDER = "static/uploads"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
 @app.route('/')
@@ -14,25 +20,26 @@ def home():
 
 @app.route("/preds", methods=['POST'])
 def submit():
-    cloth = request.files['cloth']
-    model = request.files['model']
+    cloth_file = request.files['cloth']
+    model_file = request.files['model']
 
-    ## replace the url from the ngrok url provided on the notebook on server.
-    url = "http://e793-34-123-73-186.ngrok-free.app/api/transform"
-    print("sending")
-    response = requests.post(url=url, files={"cloth":cloth.stream, "model":model.stream})
-    op = Image.open(BytesIO(response.content))
+    # Save uploaded files
+    cloth_path = os.path.join(UPLOAD_FOLDER, "cloth.jpg")
+    model_path = os.path.join(UPLOAD_FOLDER, "model.jpg")
+    output_path = os.path.join(UPLOAD_FOLDER, "output.png")
 
-    buffer = BytesIO()
-    op.save(buffer, 'png')
-    buffer.seek(0)
+    cloth_file.save(cloth_path)
+    model_file.save(model_path)
 
-    data = buffer.read()
-    data = base64.b64encode(data).decode()
+    # Call your local try-on function
+    try_on_model(model_path, cloth_path, output_path)  # <- implement this in run.py
 
+    # Load the output image and convert to base64
+    with open(output_path, "rb") as f:
+        encoded_img = base64.b64encode(f.read()).decode("utf-8")
 
-    return render_template('index.html', op=data)
-    # return render_template('index.html', test=True)
+    return render_template('index.html', op=encoded_img)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
